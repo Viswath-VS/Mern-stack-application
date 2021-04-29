@@ -1,0 +1,33 @@
+{
+  "name": "mern-stack-application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "build": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Viswath-VS/Mern-stack-application.git"
+  },
+  "author": "Viswath-VS",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Viswath-VS/Mern-stack-application/issues"
+  },
+  "homepage": "https://github.com/Viswath-VS/Mern-stack-application#readme",
+  "dependencies": {
+    "alphavantage": "^2.2.0",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
