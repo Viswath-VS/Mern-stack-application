@@ -7,13 +7,13 @@ import StocksViewDAO from './DAO/stocksviewDAO.js';
 
 // variable configurations
 dotenv.config();
-const mongoClient = mongodb.MongoClient;
+const MongoClient = mongodb.MongoClient;
 const port = process.env.PORT || 5000;
 const url =  process.env.DATABASE_LINK;
 
 // connecting to database and handling data access objects.
-mongoClient.connect(url,
-  {useNewUrlParser:true})
+MongoClient.connect("mongodb+srv://Viswath:mernstack@database.zybff.mongodb.net/stockDB?retryWrites=true&w=majority",
+  {useNewUrlParser:true,useUnifiedTopology:true})
   .then(async (client) =>{
     await StocksDAO.injectDB(client)
     await StocksViewDAO.injectDB(client)

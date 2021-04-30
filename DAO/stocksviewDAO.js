@@ -1,6 +1,6 @@
 import mongodb from "mongodb"
 const ObjectId = mongodb.ObjectID
-const url =  process.env.DATABASE_LINK;
+const url =  process.env.DATABASE_NS;
 let saved;
 
 // receiving data and initalizing it.
@@ -12,25 +12,36 @@ export default class StocksViewDAO {
     try {
       saved = await conn.db(url).collection("savedList")
     } catch (e) {
-      console.error(`Unable to establish collection handles in userDAO: ${e}`)
+      console.error(`Unable to connect to database: ${e}`)
     }
   }
 
-// static funtion to add a document to DB.
-  static async saveStock(stockId,name,symbol,capital,price,exchange) {
-    try {
-      const reviewDoc = { name: name,
-          symbol: symbol,
-          marketCapital: date,
-          stockPrice: review,
-          stock_id: ObjectId(stockId),
-          exchange:exchange
-        }
+  // async function to search list by name and symbol
+  static async apiGetSavedStocks ({
+    filter = null
+    }={}) {
+    let query;
+    if(filter){
+      if ("name" in filter){
+        query = {"name":{$eq: filter["name"]}}
+      }else if ("symbol"in filter) {
+        query = {"symbol":{$eq: filter["symbol"]}}
+      }
+    }
 
-      return await saved.insertOne(reviewDoc)
-    } catch (e) {
-      console.error(`Unable to post review: ${e}`)
-      return { error: e }
+    let match;
+    try{
+      match = await saved.find(query)
+    }catch(err){
+      console.error(err);
+      return {stockList:[]};
+    }
+    try{
+      const stockList = await match.toArray();
+      return { stockList }
+    }catch(err){
+      console.error(err);
+      return{stockList:[]}
     }
   }
 
