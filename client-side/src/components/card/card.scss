@@ -1,0 +1,38 @@
+.card-items{
+    border: 2px solid whitesmoke;
+    padding: 1rem;
+    grid-column: span 1;
+    display: grid;
+    grid: 1fr 1fr/ 3fr 1fr;
+    border-radius: 5px;
+    min-height: 12rem;
+    max-width: 19.3rem;
+    // 
+
+    h2{
+        font-weight: 400;
+        font-size: 2.25rem;
+        // padding: 1rem;
+        grid-column: span 4;
+        text-align: center;
+    }
+    p{
+        font-size: 1.12rem;
+        // padding: 1rem;
+        align-items: flex-end;
+        grid-column: span 1;
+    }
+    img{
+        grid-column: span 1;
+        width: 3.3rem;
+        // padding: 1rem;
+        justify-items: end;
+    }
+
+    &:hover{
+        border: 3px solid whitesmoke;
+        box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.24);
+        background-color: whitesmoke;
+        
+    }
+}
