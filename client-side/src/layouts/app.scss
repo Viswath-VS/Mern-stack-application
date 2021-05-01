@@ -10,7 +10,7 @@
 .app-wrapper{
     display: grid;
     grid: 1fr 2.5fr 9fr/ 1fr;
-    grid-row-gap: 1rem;
+    row-gap: 1.5rem;
 
     .nav-wrapper{
         grid-row: span 1;
@@ -30,6 +30,6 @@
 
     .table-wrapper{
         grid-row: span 1;
-        margin: 0 10.1rem;
+        margin: 0 8rem;
     }
 }

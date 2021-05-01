@@ -3,14 +3,14 @@ import "./app.scss";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "../components/navbar/navbar";
 import Cards from "../components/card/card";
-import Home from "../pages/home";
-import View from "../pages/view";
+import Home from "../pages/home/home";
+import View from "../pages/view/view";
 
 const App = () => {
   return (
     <div className="app-wrapper">
       <div className="nav-wrapper">
-        <Navbar title = "Quikie Apps" />
+        <Navbar title="Quikie Apps" />
       </div>
       <div className="card-wrapper">
         <Cards logo="GOOGL.png" symbol="GOOG" price="1515 USD" />
@@ -23,7 +23,7 @@ const App = () => {
             {/* <View /> */}
           </Route>
           <Route exact path="/">
-            {/* <Home /> */}
+            <Home />
           </Route>
         </Switch>
       </div>
