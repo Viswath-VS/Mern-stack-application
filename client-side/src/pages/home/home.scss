@@ -10,7 +10,6 @@
     align-items: center;
     padding: 0.8rem;
     border-radius: 5px;
-    // background-color: whitesmoke;
     display: grid;
     grid: auto / 1fr 1.2fr 1fr;
     width: 100%;
@@ -29,13 +28,13 @@
       grid: 1fr/1fr 4fr;
       border-radius: 0.5rem;
       background-color: whitesmoke;
-      //   text-align: center;
+      
       align-items: center;
       .search {
         color: #6e6893;
         grid-column: span 1;
         width: 100%;
-        // align-items: center;
+        
       }
 
       .search-bar {
@@ -49,8 +48,13 @@
         font-size: medium;
       }
     }
+    .header-bottom{
+        grid-column: span 1;
+        height: 12.5rem;
+        display: grid;
+        grid: 1fr/1fr 4fr; 
+        
+    }
   }
 }
-.email {
-  background-color: whitesmoke;
-}
+

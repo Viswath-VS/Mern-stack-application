@@ -20,8 +20,9 @@ export const useTableSearch = ({ searchVal, retrieve }) => {
       const { data: users } = await retrieve();
       setOrigData(users);
       setFilteredData(users);
-      const searchInd = users.map(user => {
+      const searchInd = users.map((user) => {
         const allValues = crawl(user);
+        console.log(allValues);
         return { allValues: allValues.toString() };
       });
       setSearchIndex(searchInd);
@@ -38,7 +39,7 @@ export const useTableSearch = ({ searchVal, retrieve }) => {
         return null;
       });
       setFilteredData(
-        reqData.filter(user => {
+        reqData.filter((user) => {
           if (user) return true;
           return false;
         })

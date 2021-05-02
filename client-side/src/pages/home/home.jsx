@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./home.scss";
 import SearchIcon from "@material-ui/icons/Search";
-import { userColumns } from "../../store/columnsStore";
+// import { userColumns } from "../../store/columnsStore";
 import { useTableSearch } from "../../store/useTableSearch";
 import axios from "axios";
 import { Table } from "antd";
+import "antd/dist/antd.css";
 
-const { Column } = Table;
 const fetchUsers = async () => {
   const { data } = await axios.get(
     "https://jsonplaceholder.typicode.com/users/"
@@ -16,10 +16,46 @@ const fetchUsers = async () => {
 
 const Home = () => {
   const [searchVal, setSearchVal] = useState(null);
+  const [buttonState, setButtonState] = useState(true);
   const { filteredData, loading } = useTableSearch({
     searchVal,
     retrieve: fetchUsers,
   });
+  const handleClick = (e, record) => {
+    // console.log(record);
+    // const button = record.key;
+    const newUserColumn = [...userColumns];
+    newUserColumn[e.target.key].state = !newUserColumn[e.target.key].state;
+    setUserColumns(newUserColumn);
+
+    console.log(buttonState);
+  };
+  const [userColumns, setUserColumns] = useState([
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Username",
+      dataIndex: "username",
+      key: "username",
+    },
+    {
+      title: "",
+      key: "id",
+      state: false,
+      render: (record) => (
+        <div>
+          {userColumns.state ? (
+            <button onClick={(e) => handleClick(e, record)}>Save Data</button>
+          ) : (
+            <button onClick={(e) => handleClick(e, record)}>View Data</button>
+          )}
+        </div>
+      ),
+    },
+  ]);
 
   return (
     <div className="home-wrapper">
@@ -39,22 +75,13 @@ const Home = () => {
         <Table
           rowKey="name"
           dataSource={filteredData}
-          //   columns={userColumns}
+          columns={userColumns}
           loading={loading}
           pagination={true}
-        >
-          <Column title="name" dataIndex="name" key="name" />
-          <Column title="Username" dataIndex="username" key="username" />
-          <Column
-            title="Email"
-            dataIndex="email"
-            key="email"
-            className="email"
-          />
-        </Table>
+        />
       </div>
     </div>
   );
 };
-
+// (e)=>console.log(record)
 export default Home;

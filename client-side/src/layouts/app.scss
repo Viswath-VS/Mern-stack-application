@@ -5,11 +5,11 @@
     margin: 0;
     box-sizing: border-box;
     font-family: "Roboto",sans-serif;
-    overflow-x: hidden;
+    // overflow-x: hidden;
 }
 .app-wrapper{
     display: grid;
-    grid: 1fr 2.5fr 9fr/ 1fr;
+    grid: 1fr 2.5fr / 1fr;
     row-gap: 1.5rem;
 
     .nav-wrapper{

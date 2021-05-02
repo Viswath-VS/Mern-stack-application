@@ -1,7 +1,3 @@
-// import { Button } from 'antd';
-// import React,{useState,useEffect} from 'react';
-
-
 export const userColumns = [
     {
       title: "Name",
@@ -19,12 +15,10 @@ export const userColumns = [
       key: "email"
     },
     {
-      title: "",
-      key: "key",
-      dataIndex:"key",
-      render:(record)=>(
-          <button onClick={()=>console.log(record)}>Button Test</button>
-      ) 
+      
+      key: "id",
+      render: (record)=>(<button onClick={(e)=>console.log(record)}>Save Data</button>),
+      
     },
     {
       title: "Phone",
@@ -37,5 +31,4 @@ export const userColumns = [
       key: "website"
     }
   ];
-
-
+  
