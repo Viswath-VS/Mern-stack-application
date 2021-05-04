@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import "./view.scss";
 import { Link, useHistory } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
-// import { userColumns } from "../../store/columnsStore";
 import { useTableSearch } from "../../store/useTableSearch";
 import axios from "axios";
-import { Table, Tag, Button } from "antd";
+import { Table } from "antd";
 import "antd/dist/antd.css";
 
 const fetchStocks = async (e, record) => {

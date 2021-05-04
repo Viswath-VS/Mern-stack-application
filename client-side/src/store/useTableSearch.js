@@ -8,6 +8,8 @@ export const useTableSearch = ({ searchVal, retrieve }) => {
 
   useEffect(() => {
     setLoading(true);
+
+    // converts the entire user object into a array of single strings.
     const crawl = (user, allValues) => {
       if (!allValues) allValues = [];
       for (var key in user) {
@@ -16,6 +18,7 @@ export const useTableSearch = ({ searchVal, retrieve }) => {
       }
       return allValues;
     };
+    // fetchs data and sets up the inital loop.
     const fetchData = async () => {
       const { data: users } = await retrieve();
       setOrigData(users);
@@ -30,7 +33,10 @@ export const useTableSearch = ({ searchVal, retrieve }) => {
     fetchData();
   }, [retrieve]);
 
+
   useEffect(() => {
+
+    // the search value from the table is used to map through our searchindex.
     if (searchVal) {
       const reqData = searchIndex.map((user, index) => {
         if (user.allValues.toLowerCase().indexOf(searchVal.toLowerCase()) >= 0)

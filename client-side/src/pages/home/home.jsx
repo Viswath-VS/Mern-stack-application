@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import "./home.scss";
 import { Link, useHistory } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
-// import { userColumns } from "../../store/columnsStore";
 import { useTableSearch } from "../../store/useTableSearch";
 import axios from "axios";
-import { Table, Tag, Button } from "antd";
+import { Table } from "antd";
 import "antd/dist/antd.css";
 
 const fetchStocks = async (e, record) => {
@@ -19,8 +18,7 @@ const Home = () => {
   const { filteredData, loading } = useTableSearch({
     searchVal,
     retrieve: fetchStocks,
-  });
-
+  })
   const toggleClick = async (e, record) => {
     const data = {
       id: record.id,
