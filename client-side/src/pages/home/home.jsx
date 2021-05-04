@@ -1,61 +1,94 @@
 import React, { useState } from "react";
 import "./home.scss";
+import { Link, useHistory } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 // import { userColumns } from "../../store/columnsStore";
 import { useTableSearch } from "../../store/useTableSearch";
 import axios from "axios";
-import { Table } from "antd";
+import { Table, Tag, Button } from "antd";
 import "antd/dist/antd.css";
 
-const fetchUsers = async () => {
-  const { data } = await axios.get(
-    "https://jsonplaceholder.typicode.com/users/"
-  );
+const fetchStocks = async (e, record) => {
+  const { data } = await axios.get("http://localhost:5000/");
   return { data };
 };
 
 const Home = () => {
   const [searchVal, setSearchVal] = useState(null);
-  const [buttonState, setButtonState] = useState(true);
+  let history = useHistory();
   const { filteredData, loading } = useTableSearch({
     searchVal,
-    retrieve: fetchUsers,
+    retrieve: fetchStocks,
   });
-  const handleClick = (e, record) => {
-    // console.log(record);
-    // const button = record.key;
-    const newUserColumn = [...userColumns];
-    newUserColumn[e.target.key].state = !newUserColumn[e.target.key].state;
-    setUserColumns(newUserColumn);
 
-    console.log(buttonState);
+  const toggleClick = async (e, record) => {
+    const data = {
+      id: record.id,
+      name: record.name,
+      symbol: record.symbol,
+      marketCaptial: record.marketCaptial,
+      stockPrice: record.stockPrice,
+      button: !record.button,
+    };
+    await axios.post("http://localhost:5000/view", data);
+    const updateData = {
+      id: record.id,
+      button: !record.button,
+    };
+    await axios.post("http://localhost:5000/", updateData);
+
+    history.push("/homeUpdate");
   };
-  const [userColumns, setUserColumns] = useState([
+
+  const userColumns = [
     {
-      title: "Name",
+      title: "COMPANY NAME",
       dataIndex: "name",
+      align:"center",
       key: "name",
     },
     {
-      title: "Username",
-      dataIndex: "username",
-      key: "username",
+      title: "SYMBOL",
+      dataIndex: "symbol",
+      color:"geekblue",
+      align:"left",
+      key: "symbol",
+      render: (records) => <div className="symbol">{records}</div>,
+    },
+    {
+      title: "MARKET CAP",
+      dataIndex: "marketCaptial",
+      align:"center",
+      key: "marketCaptial",
     },
     {
       title: "",
-      key: "id",
-      state: false,
+      align:"center",
+      key: "_id",
       render: (record) => (
         <div>
-          {userColumns.state ? (
-            <button onClick={(e) => handleClick(e, record)}>Save Data</button>
+          {record.button ? (
+            <Link to="/view">
+              <button className="btn-view">View Data</button>
+            </Link>
           ) : (
-            <button onClick={(e) => handleClick(e, record)}>View Data</button>
+            <button
+              className="btn-save"
+              onClick={(e) => toggleClick(e, record)}
+            >
+              Save Data
+            </button>
           )}
         </div>
       ),
     },
-  ]);
+    {
+      title: "CURRENT PRICE",
+      align:"center",
+      dataIndex: "stockPrice",
+      key: "stockPrice",
+    },
+  ];
 
   return (
     <div className="home-wrapper">
@@ -74,6 +107,7 @@ const Home = () => {
       <div className="header-bottom">
         <Table
           rowKey="name"
+          rowClassName="row"
           dataSource={filteredData}
           columns={userColumns}
           loading={loading}
@@ -83,5 +117,5 @@ const Home = () => {
     </div>
   );
 };
-// (e)=>console.log(record)
+
 export default Home;

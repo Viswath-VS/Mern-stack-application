@@ -4,7 +4,9 @@ import { Switch, Route } from "react-router-dom";
 import Navbar from "../components/navbar/navbar";
 import Cards from "../components/card/card";
 import Home from "../pages/home/home";
+import HomeUpdate from "../pages/home/homeUpdate";
 import View from "../pages/view/view";
+import ViewUpdate from "../pages/view/viewUpdate";
 
 const App = () => {
   return (
@@ -20,7 +22,13 @@ const App = () => {
       <div className="table-wrapper">
         <Switch>
           <Route exact path="/view">
-            {/* <View /> */}
+            <View />
+          </Route>
+          <Route exact path="/viewUpdate">
+            <ViewUpdate />
+          </Route>
+          <Route exact path="/homeUpdate">
+            <HomeUpdate />
           </Route>
           <Route exact path="/">
             <Home />

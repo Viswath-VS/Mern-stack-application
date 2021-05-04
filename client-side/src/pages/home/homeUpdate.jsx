@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./view.scss";
+import "./home.scss";
 import { Link, useHistory } from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 // import { userColumns } from "../../store/columnsStore";
@@ -9,75 +9,85 @@ import { Table, Tag, Button } from "antd";
 import "antd/dist/antd.css";
 
 const fetchStocks = async (e, record) => {
-  const { data } = await axios.get("http://localhost:5000/view");
+  const { data } = await axios.get("http://localhost:5000/");
   return { data };
 };
 
-const View = () => {
+const HomeUpdate = () => {
   const [searchVal, setSearchVal] = useState(null);
   let history = useHistory();
   const { filteredData, loading } = useTableSearch({
     searchVal,
     retrieve: fetchStocks,
   });
-  const handleDelete = async (e, record) => {
-    console.log(record);
+
+  const toggleClick = async (e, record) => {
     const data = {
       id: record.id,
+      name: record.name,
+      symbol: record.symbol,
+      marketCaptial: record.marketCaptial,
+      stockPrice: record.stockPrice,
       button: !record.button,
     };
-    await axios.post("http://localhost:5000/delete", data);
+    await axios.post("http://localhost:5000/view", data);
     const updateData = {
       id: record.id,
       button: !record.button,
     };
     await axios.post("http://localhost:5000/", updateData);
-    history.push("/viewUpdate");
+
+    history.push("/");
   };
+
   const userColumns = [
     {
       title: "COMPANY NAME",
       dataIndex: "name",
-      align: "center",
       key: "name",
     },
     {
       title: "SYMBOL",
       dataIndex: "symbol",
-      align: "left",
       key: "symbol",
       render: (records) => <div className="symbol">{records}</div>,
     },
     {
       title: "MARKET CAP",
       dataIndex: "marketCaptial",
-      align: "center",
       key: "marketCaptial",
     },
     {
       title: "",
-      align: "center",
       key: "_id",
       render: (record) => (
         <div>
-          <button className="btn-view" onClick={(e) => handleDelete(e, record)}>
-            Delete
-          </button>
+          {record.button ? (
+            <Link to="/view">
+              <button className="btn-view">View Data</button>
+            </Link>
+          ) : (
+            <button
+              className="btn-save"
+              onClick={(e) => toggleClick(e, record)}
+            >
+              Save Data
+            </button>
+          )}
         </div>
       ),
     },
     {
       title: "CURRENT PRICE",
-      align: "center",
       dataIndex: "stockPrice",
       key: "stockPrice",
     },
   ];
 
   return (
-    <div className="view-wrapper">
+    <div className="home-wrapper">
       <div className="header-top">
-        <div className="header-top-left">Saved Data Table</div>
+        <div className="header-top-left">Stock Details Table</div>
         <div className="header-top-middle">
           <SearchIcon className="search" />
           <input
@@ -88,22 +98,17 @@ const View = () => {
           />
         </div>
       </div>
-      <div className="middle">
+      <div className="header-bottom">
         <Table
           rowKey="name"
           dataSource={filteredData}
           columns={userColumns}
           loading={loading}
-          pagination={false}
+          pagination={true}
         />
-      </div>
-      <div className="view-bottom">
-        <Link to="/">
-          <button className="btn-view">Back</button>
-        </Link>
       </div>
     </div>
   );
 };
 
-export default View;
+export default HomeUpdate;

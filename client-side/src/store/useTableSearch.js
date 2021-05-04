@@ -22,7 +22,6 @@ export const useTableSearch = ({ searchVal, retrieve }) => {
       setFilteredData(users);
       const searchInd = users.map((user) => {
         const allValues = crawl(user);
-        console.log(allValues);
         return { allValues: allValues.toString() };
       });
       setSearchIndex(searchInd);

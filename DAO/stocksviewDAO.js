@@ -1,4 +1,5 @@
 import mongodb from "mongodb"
+import SavedList from "../model/savedListModel.js";
 const ObjectId = mongodb.ObjectID
 const url =  process.env.DATABASE_NS;
 let saved;
@@ -10,7 +11,7 @@ export default class StocksViewDAO {
       return
     }
     try {
-      saved = await conn.db(url).collection("savedList")
+      saved = await SavedList
     } catch (e) {
       console.error(`Unable to connect to database: ${e}`)
     }

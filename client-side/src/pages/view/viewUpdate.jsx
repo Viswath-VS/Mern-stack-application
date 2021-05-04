@@ -13,7 +13,7 @@ const fetchStocks = async (e, record) => {
   return { data };
 };
 
-const View = () => {
+const ViewUpdate = () => {
   const [searchVal, setSearchVal] = useState(null);
   let history = useHistory();
   const { filteredData, loading } = useTableSearch({
@@ -32,7 +32,7 @@ const View = () => {
       button: !record.button,
     };
     await axios.post("http://localhost:5000/", updateData);
-    history.push("/viewUpdate");
+    history.push("/view");
   };
   const userColumns = [
     {
@@ -44,7 +44,6 @@ const View = () => {
     {
       title: "SYMBOL",
       dataIndex: "symbol",
-      align: "left",
       key: "symbol",
       render: (records) => <div className="symbol">{records}</div>,
     },
@@ -56,8 +55,8 @@ const View = () => {
     },
     {
       title: "",
-      align: "center",
       key: "_id",
+      align: "center",
       render: (record) => (
         <div>
           <button className="btn-view" onClick={(e) => handleDelete(e, record)}>
@@ -68,8 +67,8 @@ const View = () => {
     },
     {
       title: "CURRENT PRICE",
-      align: "center",
       dataIndex: "stockPrice",
+      align: "center",
       key: "stockPrice",
     },
   ];
@@ -106,4 +105,4 @@ const View = () => {
   );
 };
 
-export default View;
+export default ViewUpdate;
