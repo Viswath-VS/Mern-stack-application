@@ -19,12 +19,9 @@
   },
   "homepage": "https://github.com/Viswath-VS/Mern-stack-application#readme",
   "dependencies": {
-    "alphavantage": "^2.2.0",
-    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongodb": "^3.6.6",
     "mongoose": "^5.12.6"
   },
   "devDependencies": {

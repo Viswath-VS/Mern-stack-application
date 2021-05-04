@@ -9,7 +9,7 @@ import { Table, Tag, Button } from "antd";
 import "antd/dist/antd.css";
 
 const fetchStocks = async (e, record) => {
-  const { data } = await axios.get("http://localhost:5000/view");
+  const { data } = await axios.get("http://localhost:5000/api/view");
   return { data };
 };
 
@@ -26,12 +26,12 @@ const View = () => {
       id: record.id,
       button: !record.button,
     };
-    await axios.post("http://localhost:5000/delete", data);
+    await axios.post("http://localhost:5000/api/delete", data);
     const updateData = {
       id: record.id,
       button: !record.button,
     };
-    await axios.post("http://localhost:5000/", updateData);
+    await axios.post("http://localhost:5000/api/", updateData);
     history.push("/viewUpdate");
   };
   const userColumns = [

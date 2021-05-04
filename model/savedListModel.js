@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// model Schema for the Saved collection docs.
 const savedListSchema = new mongoose.Schema({
   id: Number,
   name: String,

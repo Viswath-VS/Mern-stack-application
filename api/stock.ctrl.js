@@ -1,39 +1,73 @@
-// import StocksDAO from '../DAO/stocksDAO.js';
+import Stock from "../model/stockListModel.js";
+import Saved from "../model/savedListModel.js";
 
-export default class StockCtrl {
+// database accessing function for various fetch requests.
+export default class GetResponse {
+  // returns stock details
+  static async getStock(req, res, next) {
+    const stockList = await Stock.find({}, (err, saved) => {
+      if (err) {
+        return err;
+      } else return saved;
+    });
+    res.json(stockList);
+  }
 
-  // handle request to get stockList data from collection
-  static async apiGetStock(req, res, next) {
-
-    let filter = {}
-    if (req.query.name) {
-      filter.name = req.query.name;
-    } else if (req.query.symbol) {
-      filter.symbol = req.query.symbol;
+  // updates the stock collection.
+  static async updateStock(req, res, next) {
+    try {
+      console.log(req.body);
+      const id = req.body.id;
+      const updates = req.body.button;
+      const options = { new: true };
+      await Stock.updateOne({ id: id }, { button: updates }, options);
+      res.json({ success: true });
+    } catch (error) {
+      res.json(error.message);
     }
-
-    const { stockList } = await StocksDAO.getStocks({filter});
-
-    let response = {  name: stockList };
-    res.json(response);
   }
 
-// handle request to add new list to saved collection
-static async apiAddSaveStock(req,res,next){
-
-  try{
-    const stockId = req.body._id;
-    const name = req.body.name;
-    const symbol = req.body.symbol;
-    const capital = req.body.marketCapital;
-    const price = req.body.stockPrice;
-    const exchange = req.body.exchange;
-  }catch(e){
-    res.json({error:e.message})
+  // adds new document to the Saved collection
+  static async addSaved(req, res, next) {
+    try {
+      const data = req.body;
+      await Saved.create({
+        id: data.id,
+        name: data.name,
+        symbol: data.symbol,
+        marketCaptial: data.marketCaptial,
+        stockPrice: data.stockPrice,
+        button: data.button,
+      });
+      res.json({ success: true });
+    } catch (err) {
+      res.json(err.message);
+    }
   }
-const savedStocks = await StocksDAO.saveStock(stockId,name,symbol,capital,price,exchange);
-res.json({status:"success"});
 
-}
+  // returns saved Collections doc.
+  static async getSaved(req, res, next) {
+    try {
+      const saveList = await Saved.find({}, (err, saved) => {
+        if (err) {
+          return err;
+        } else return saved;
+      });
+      res.json(saveList);
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
 
+  // deletes saved collection by ID.
+  static async deleteSaved(req, res, next) {
+    try {
+      console.log(req.body.id);
+      const data = req.body.id;
+      await Saved.deleteOne({ id: data });
+      res.json({ success: true });
+    } catch (err) {
+      res.json(err.message);
+    }
+  }
 }

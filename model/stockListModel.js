@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// model Schema for Stock Collections documents.
 const stockSchema = new mongoose.Schema({
   id: Number,
   name: String,

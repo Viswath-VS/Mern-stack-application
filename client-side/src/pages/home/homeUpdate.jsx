@@ -9,7 +9,7 @@ import { Table, Tag, Button } from "antd";
 import "antd/dist/antd.css";
 
 const fetchStocks = async (e, record) => {
-  const { data } = await axios.get("http://localhost:5000/");
+  const { data } = await axios.get("http://localhost:5000/api/");
   return { data };
 };
 
@@ -30,12 +30,12 @@ const HomeUpdate = () => {
       stockPrice: record.stockPrice,
       button: !record.button,
     };
-    await axios.post("http://localhost:5000/view", data);
+    await axios.post("http://localhost:5000/api/view", data);
     const updateData = {
       id: record.id,
       button: !record.button,
     };
-    await axios.post("http://localhost:5000/", updateData);
+    await axios.post("http://localhost:5000/api/", updateData);
 
     history.push("/");
   };

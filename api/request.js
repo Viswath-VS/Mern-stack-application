@@ -1,14 +1,13 @@
 import express from "express";
-import StockCtrl from "./stock.ctrl.js"
-import StockViewCtrl from "./stock.viewctrl.js"
+import GetResponse from "./stock.ctrl.js"
+
 const router = express.Router();
 
-// api routes handling for home page
-router.route("/").get(StockCtrl.apiGetStock);
-router.route("/").post(StockCtrl.apiAddSaveStock);
-
-//  api routes handling for View page
-router.route("/view").get(StockViewCtrl.apiGetSavedStock);
-router.route("/view").delete(StockViewCtrl.apiDeleteSavedStock);
+// handling various api request from front-end
+router.route("/").get(GetResponse.getStock);
+router.route("/").post(GetResponse.updateStock);
+router.route("/view").get(GetResponse.getSaved);
+router.route("/view").post(GetResponse.addSaved);
+router.route("/delete").post(GetResponse.deleteSaved);
 
 export default router;
